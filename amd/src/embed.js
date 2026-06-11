@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 // This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -23,12 +21,18 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-import { get_string as getString } from 'core/str';
-import { exception as displayException } from 'core/notification';
-import { getKetcherUrl } from './options';
+import {get_string as getString} from 'core/str';
+import {exception as displayException} from 'core/notification';
+import {component} from './common';
+import {getKetcherUrl} from './options';
 
-export const openKetcherDialog = async (editor, currentStructBase64 = null) => {
-    const title = await getString('buttonNameTitle', 'tiny_ketcher');
+export const openKetcherDialog = async(editor, currentStructBase64 = null) => {
+    const [title, cancelText, saveText] = await Promise.all([
+        getString('buttontitle', component),
+        getString('cancel', component),
+        getString('save', component),
+    ]);
+
     const ketcherUrl = getKetcherUrl(editor);
 
     if (!ketcherUrl) {
@@ -43,7 +47,8 @@ export const openKetcherDialog = async (editor, currentStructBase64 = null) => {
             items: [
                 {
                     type: 'htmlpanel',
-                    html: `<iframe id="ketcher-iframe" src="${ketcherUrl}" style="width: 100%; height: 500px; border: none;"></iframe>`
+                    html: `<iframe id="ketcher-iframe" src="${ketcherUrl}"` +
+                        ` style="width: 100%; height: 500px; border: none;"></iframe>`
                 }
             ]
         },
@@ -52,16 +57,16 @@ export const openKetcherDialog = async (editor, currentStructBase64 = null) => {
             {
                 type: 'cancel',
                 name: 'cancel',
-                text: 'Cancel'
+                text: cancelText
             },
             {
                 type: 'submit',
                 name: 'save',
-                text: 'Save',
+                text: saveText,
                 primary: true
             }
         ],
-        onSubmit: async (api) => {
+        onSubmit: async(api) => {
             const iframe = document.getElementById('ketcher-iframe');
             if (!iframe || !iframe.contentWindow || !iframe.contentWindow.ketcher) {
                 window.console.error('Ketcher is not loaded.');
@@ -70,10 +75,10 @@ export const openKetcherDialog = async (editor, currentStructBase64 = null) => {
             }
 
             const ketcher = iframe.contentWindow.ketcher;
-            
+
             try {
                 const struct = await ketcher.getKet();
-                
+
                 if (!struct || (typeof struct === 'string' && struct.trim() === '')) {
                     api.close();
                     return;
@@ -87,17 +92,18 @@ export const openKetcherDialog = async (editor, currentStructBase64 = null) => {
                 const reader = new FileReader();
                 reader.onload = () => {
                     const base64Image = reader.result;
-                    
+
                     const parser = new DOMParser();
                     const svgDoc = parser.parseFromString(atob(base64Image.split(',')[1]), "image/svg+xml");
                     const svgElement = svgDoc.documentElement;
                     const width = svgElement.getAttribute("width") || "300";
                     const height = svgElement.getAttribute("height") || "300";
-                    
+
                     const ketStructBase64 = btoa(JSON.stringify(struct));
                     const url = URL.createObjectURL(imageBlob);
-                    const content = `<img src="${url}" width="${width}" height="${height}" data-ketcher-struct="${ketStructBase64}" class="ketcher-molecule" alt="Chemical Structure">`;
-                    
+                    const content = `<img src="${url}" width="${width}" height="${height}"` +
+                        ` data-ketcher-struct="${ketStructBase64}" class="ketcher-molecule" alt="Chemical Structure">`;
+
                     editor.insertContent(content);
                     api.close();
                 };
@@ -109,7 +115,7 @@ export const openKetcherDialog = async (editor, currentStructBase64 = null) => {
     };
 
     editor.windowManager.open(dialogConfig);
-    
+
     if (currentStructBase64) {
         let attempts = 0;
         const maxAttempts = 50;

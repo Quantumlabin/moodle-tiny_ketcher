@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 // This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -23,11 +21,7 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-const component = 'tiny_ketcher';
-
-export default {
-    component,
-    pluginName: `${component}/plugin`,
-    icon: component,
-    buttonName: 'tiny_ketcher',
-};
+export const component = 'tiny_ketcher';
+export const pluginName = `${component}/plugin`;
+export const icon = component;
+export const buttonName = 'tiny_ketcher';

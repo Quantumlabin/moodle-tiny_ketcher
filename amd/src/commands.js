@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 // This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -44,7 +42,7 @@ export const getSetup = async() => {
         buttonNameTitle,
         buttonImage,
     ] = await Promise.all([
-        getString('buttonNameTitle', component),
+        getString('buttontitle', component),
         getButtonImage('icon', component),
     ]);
 

@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 // This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -48,27 +46,16 @@ from './commands';
 import * as Configuration from './configuration';
 
 // Setup the tiny_ketcher Plugin.
-export default new Promise(async(resolve) => {
-    const [
-        tinyMCE,
-        pluginMetadata,
-        setupCommands,
-    ] = await Promise.all([
-                getTinyMCE(),
-                getPluginMetadata(component, pluginName),
-                getCommandSetup(),
-            ]);
-
+export default Promise.all([
+    getTinyMCE(),
+    getPluginMetadata(component, pluginName),
+    getCommandSetup(),
+]).then(([tinyMCE, pluginMetadata, setupCommands]) => {
     tinyMCE.PluginManager.add(pluginName, (editor) => {
-        // Register any options that your plugin has
         registerOptions(editor);
-
-        // Setup any commands such as buttons, menu items, and so on.
         setupCommands(editor);
-
-        // Return the pluginMetadata object. This is used by TinyMCE to display a help link for your plugin.
         return pluginMetadata;
     });
 
-    resolve([pluginName, Configuration]);
+    return [pluginName, Configuration];
 });

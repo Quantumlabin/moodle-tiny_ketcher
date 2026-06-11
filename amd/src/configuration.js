@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 // This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -18,7 +16,7 @@
 /**
  * Tiny tiny_ketcher for Moodle.
  *
- * @module      tiny_ketcher/configurastion
+ * @module      tiny_ketcher/configuration
  * @copyright   2024 Venkatesan Rangarajan <venkatesanrpu@gmail.com>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

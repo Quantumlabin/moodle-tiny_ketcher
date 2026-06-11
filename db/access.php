@@ -14,12 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Capability definitions for the tiny_ketcher plugin.
+ *
+ * @package     tiny_ketcher
+ * @copyright   2024 Venkatesan Rangarajan <venkatesanrpu@gmail.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 defined('MOODLE_INTERNAL') || die();
 
 $capabilities = [
     'tiny/ketcher:use' => [
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_SYSTEM,
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_MODULE,
         'archetypes' => [
             'manager' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
