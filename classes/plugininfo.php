@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Tiny Ketcher plugin.
+ * Tiny Ketcher plugin info.
  *
  * @package    tiny_ketcher
  * @copyright  2024 Venkatesan Rangarajan <venkatesanrpu@gmail.com>
@@ -31,23 +31,48 @@ use editor_tiny\plugin_with_buttons;
 use editor_tiny\plugin_with_configuration;
 use editor_tiny\plugin_with_menuitems;
 
+/**
+ * Tiny Ketcher plugin info class.
+ *
+ * @package    tiny_ketcher
+ * @copyright  2024 Venkatesan Rangarajan <venkatesanrpu@gmail.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class plugininfo extends plugin implements
     plugin_with_buttons,
-    plugin_with_menuitems,
-    plugin_with_configuration {
-
+    plugin_with_configuration,
+    plugin_with_menuitems {
+    /**
+     * Returns a list of buttons this plugin provides.
+     *
+     * @return string[]
+     */
     public static function get_available_buttons(): array {
         return [
             'tiny_ketcher/tiny_ketcher',
         ];
     }
 
+    /**
+     * Returns a list of menu items this plugin provides.
+     *
+     * @return string[]
+     */
     public static function get_available_menuitems(): array {
         return [
             'tiny_ketcher/tiny_ketcher',
         ];
     }
 
+    /**
+     * Returns plugin configuration for a given context.
+     *
+     * @param context $context
+     * @param array $options
+     * @param array $fpoptions
+     * @param editor|null $editor
+     * @return array
+     */
     public static function get_plugin_configuration_for_context(
         context $context,
         array $options,

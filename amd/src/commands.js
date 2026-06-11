@@ -21,10 +21,10 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-import { getButtonImage } from 'editor_tiny/utils';
-import { get_string as getString } from 'core/str';
-import { component, icon, buttonName } from './common';
-import { openKetcherDialog } from './embed';
+import {getButtonImage} from 'editor_tiny/utils';
+import {get_string as getString} from 'core/str';
+import {component, icon, buttonName} from './common';
+import {openKetcherDialog} from './embed';
 
 const isKetcherImage = (node) => node.nodeName.toLowerCase() === 'img' && node.hasAttribute('data-ketcher-struct');
 
